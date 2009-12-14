@@ -1,12 +1,7 @@
-Color::Calc 0.10
-===========
+Number::Phone::Normalize 0.00
+=============================
 
-The "Color::Calc" module implements simple calculations with RGB
-colors. This can be used to create a full color scheme from a few
-colors.
-
-The module is useful for CGI (or embedded perl) programmes that
-create HTML or CSS output. 
+This module normalizes phone numbers.
 
 INSTALLATION
 
@@ -17,15 +12,9 @@ To install this module type the following:
    make test
    make install
 
-DEPENDENCIES
-
-This module requires these other modules and libraries:
-
-  Graphics::ColorNames
-
 COPYRIGHT AND LICENCE
 
-Copyright © 2003 Claus A. Färber
+Copyright © 2005-2006 Claus A. Färber
 
 This library is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. 
