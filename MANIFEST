@@ -1,0 +1,9 @@
+README
+Makefile.PL
+Changes
+t/00use.t
+t/01internal.t
+t/02intl.t
+Normalize.pm
+META.yml
+MANIFEST
