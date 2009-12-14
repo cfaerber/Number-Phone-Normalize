@@ -1,5 +1,3 @@
-# $Id: none yet $
-#
 package Number::Phone::Normalize;
 
 use strict;
