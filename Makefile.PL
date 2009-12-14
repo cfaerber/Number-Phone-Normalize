@@ -4,9 +4,9 @@ use ExtUtils::MakeMaker;
 # the contents of the Makefile that is written.
 WriteMakefile(
     'NAME'		=> 'Number::Phone::Normalize',
-    'VERSION_FROM'	=> 'Normalize.pm', # finds $VERSION
+    'VERSION_FROM'	=> 'lib/Number/Phone/Normalize.pm', # finds $VERSION
+    'ABSTRACT_FROM'	=> 'lib/Number/Phone/Normalize.pm', # retrieve abstract from module
     'PREREQ_PM'		=> { },
-    ($] >= 5.005 ?    ## Add these new keywords supported since 5.005
-      (ABSTRACT_FROM => 'Normalize.pm', # retrieve abstract from module
-       AUTHOR     => 'Claus Färber <perl@faerber.muc.de>') : ()),
+    'AUTHOR'		=> 'Claus Faerber <CFAERBER@cpan.org>',
+    'LICENSE'		=> 'perl',
 );

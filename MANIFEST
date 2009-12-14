@@ -1,8 +1,7 @@
 Changes
 Makefile.PL
 MANIFEST
-META.yml
-Normalize.pm
+lib/Number/Phone/Normalize.pm
 README
 t/00base-use.t
 t/10obj__intl.t
@@ -23,3 +22,4 @@ t/34local_ac_nocc.t
 t/40vanity_cvrt.t
 t/41vanity_ok.t
 t/42vanity_ac.t
+META.yml                                 Module meta-data (added by MakeMaker)

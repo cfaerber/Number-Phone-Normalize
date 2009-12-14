@@ -1,4 +1,4 @@
-Number::Phone::Normalize 0.00
+Number::Phone::Normalize 1.00
 =============================
 
 This module normalizes phone numbers.
@@ -14,7 +14,7 @@ To install this module type the following:
 
 COPYRIGHT AND LICENCE
 
-Copyright © 2005-2006 Claus A. Färber
+Copyright © 2005-2008 Claus A. Färber
 
 This library is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. 

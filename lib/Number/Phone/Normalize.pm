@@ -10,7 +10,7 @@ use Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(phone_intl phone_local);
 
-our $VERSION = '0.10_20061031';
+our $VERSION = '0.20';
 
 sub _kill_vanity {
   my $number = shift;
@@ -248,6 +248,8 @@ outputs it in accordance to E.123 or in local formats.
 
 =head1 Functions and Methods
 
+
+
 =head2 phone_intl( $number, %params )
 
 Normalizes the phone number $number and returns it in international (E.164)
@@ -336,29 +338,53 @@ by C<AreaCode> or C<AlwaysLD> is set to true, it is returned starting with C<LDP
 
 The default is LDPrefix.
 
-=item C<AlwaysLD>
+=head4 C<AlwaysLD>
 
 If set to true, the number will always be returned with an area code, even if
 it is in the country and area specified by C<CountryCode> and C<AreaCode>.
 
-=item C<VanityOK>
+=head4 C<VanityOK>
 
 If set to true, vanity numbers will not be converted to numeric format.
 
+
+=head1 METHODS
+
+There is also an object-oriented interface.
+
+=head2 new( %params)
+
+Creates an object that carries default parameters:
+
+  $nlz = Number::Phone::Normalize->new( %params );
+
+=head2 $nlz->intl( $number [, %more_params] )
+
+=head2 $nlz->local( $number [, %more_params] )
+
+These functions are equivalent to C<phone_intl> and
+C<phone_local> but use the C<%params> passed to C<new> as default.
+
+I.e., the following calls:
+  
+  Number::Phone::Normalize->new( %p1 )->intl( $number, %p2 )
+  Number::Phone::Normalize->new( %p1 )->local( $number, %p2 )
+
+are equivalent to the follwoing:
+
+  phone_intl( $number, %p1, %p2 );
+  phone_local( $number, %p1, %p2 );
+
 =head1 BUGS AND LIMITATIONS
 
-The module does not support more complex dialling plans. It is mostly intended
-for data input/output to and from databases, not for actually dialling numbers.
+The module does not support more complex dialling plans. It is
+mostly intended for data input/output to and from databases, not
+for actually dialling numbers.
 
-=head1 AUTHOR
+=head1 AUTHOR/LICENSE
 
-Claus Färber <perl@cfaerber.name>
+Copyright © 2004-2008 Claus Färber <CFAERBER@cpan.org>
 
-=head1 COPYRIGHT
-
-Copyright © 2004-2006 Claus Färber 
-
-It is free software; you can redistribute it and/or modify it under the terms
-of either the GNU General Public License as published by the Free Software
-Foundation; either version 1, or (at your option) any later version, or the
-"Artistic License".
+It is free software; you can redistribute it and/or modify it
+under the same terms as perl itself, either version 5.5.0 or, at
+your option, any later version.
