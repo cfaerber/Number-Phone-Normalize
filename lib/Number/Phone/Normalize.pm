@@ -3,6 +3,7 @@ package Number::Phone::Normalize;
 use strict;
 use warnings;
 
+use Carp;
 use Exporter;
 
 our @ISA = qw(Exporter);
@@ -50,7 +51,7 @@ sub new {
     {
       &$accessor($self,$param{$_})
     }else{
-      die "error";
+      croak "Invalid parameter: $_";
     }
   }
 
@@ -244,119 +245,48 @@ Number::Phone::Normalize - Normalizes format of Phone Numbers.
 This module takes a phone (or E.164) number in different input formats and
 outputs it in accordance to E.123 or in local formats.
 
-=head1 Functions and Methods
+=head2 FUNCTIONS
 
-=head2 phone_intl( $number, %params )
+=over
+
+=item phone_intl( $number, %params )
 
 Normalizes the phone number $number and returns it in international (E.164)
 format. $number can be in an international format or in a local format if the
 C<CountryCode>/C<AreaCode> parameters are supplied.
 
-If C<phone_intl> does not have enough information to build an international number
-(e.g. neither C<$number> does not contain a country code and C<%param> does not
-specify a default), it returns undef.
+If C<phone_intl> does not have enough information to build an international
+number (e.g. C<$number> does not contain a country code and C<%param> does not
+specify a default), it returns C<undef>.
 
-=head2 phone_local( $number, %params )
+=item phone_local( $number, %params )
 
 Normalizes the phone number $number and returns it in local format. $number can
 be in an international format or in a local format if the C<CountryCode>/C<AreaCode>
 parameters are supplied. 
 
 If C<phone_local> does not have enough information to build an international
-number (e.g. neither C<$number> does not contain a country code and C<%param>
-does not specify a default), it returns undef.
+number (e.g. C<$number> does not contain a country code and C<%param> does not
+specify a default), it returns C<undef>.
 
-=head2 Parameters
+=back
 
-=head3 Interpreting C<$number>
+=head2 METHODS
 
-These parameters specify how the input C<$number> is interpreted if it is in a
-non-international format.
+There is also an object-oriented interface, which allows you to specify the
+parameters once, in the constructor.
 
-=head4 C<CountryCode>
+=over
 
-The local country code. It is added to phone numbers in local format without an
-country code.
-
-=head4 C<AreaCode>
-
-The local area code. It is added to phone numbers in local format without an
-area code.
-
-=head4 C<IntlPrefix>
-
-The international prefix. If C<$number> starts with this prefix, the country code
-and area code are taken from the number.
-
-The default is '00' (ITU recommendation).
-
-=head4 C<LDPrefix>
-
-The long distance prefix. If $number starts with this prefix, the area code is
-taken from $number and the country code is taken from the C<CountryCode>
-parameter.
-
-If $number starts with neither C<IntlPrefix> nor C<LDPrefix>, it is assumed to
-be in local format and both country and area codes are taken from the
-parameters.
-
-The default is '0' (ITU recommendation).
-
-=head3 Formatting output
-
-These parameters specify how the output is formatted. Most parameters only have
-an effect on output in local format.
-
-=head4 CountryCodeOut
-
-The local country code. If the number does not have the C<CountryCode> specified,
-it is returned starting with the C<IntlPrefix>.
-
-=head4 AreaCodeOut
-
-The local country code. If the number does not have the C<CountryCode> specified,
-it is returned starting with the C<LDPrefix>.
-
-=head4 C<IntlPrefixOut>
-
-The international prefix for output. If the number is not in the country
-specified by C<CountryCode>, the returned number will start with this prefix.
-
-The default is C<IntlPrefix>.
-
-You can set this parameter to '+' in order to return numbers in international
-format instead of the local format.
-
-=head4 C<LDPrefixOut>
-
-The long distance prefix for output. It the number is not in the area specified
-by C<AreaCode> or C<AlwaysLD> is set to true, it is returned starting with C<LDPrefixOut>.
-
-The default is LDPrefix.
-
-=head4 C<AlwaysLD>
-
-If set to true, the number will always be returned with an area code, even if
-it is in the country and area specified by C<CountryCode> and C<AreaCode>.
-
-=head4 C<VanityOK>
-
-If set to true, vanity numbers will not be converted to numeric format.
-
-
-=head1 METHODS
-
-There is also an object-oriented interface.
-
-=head2 new( %params)
+=item new( %params )
 
 Creates an object that carries default parameters:
 
   $nlz = Number::Phone::Normalize->new( %params );
 
-=head2 $nlz->intl( $number [, %more_params] )
+=item $nlz->intl( $number [, %more_params] )
 
-=head2 $nlz->local( $number [, %more_params] )
+=item $nlz->local( $number [, %more_params] )
 
 These functions are equivalent to C<phone_intl> and
 C<phone_local> but use the C<%params> passed to C<new> as default.
@@ -370,6 +300,96 @@ are equivalent to the follwoing:
 
   phone_intl( $number, %p1, %p2 );
   phone_local( $number, %p1, %p2 );
+
+=back
+
+=head2 COMMON PARAMETERS
+
+All functions, constructors and methods take the following parameters.
+Parameters specified in method calls override those given to the constructor.
+
+=head3 for input
+
+These parameters specify how the input C<$number> is interpreted if it is in a
+non-international format.
+
+=over
+
+=item C<CountryCode>
+
+The local country code. It is added to phone numbers in local format without an
+country code.
+
+=item C<AreaCode>
+
+The local area code. It is added to phone numbers in local format without an
+area code.
+
+=item C<IntlPrefix>
+
+The international prefix. If C<$number> starts with this prefix, the country code
+and area code are taken from the number.
+
+The default is '00' (ITU recommendation).
+
+=item C<LDPrefix>
+
+The long distance prefix. If $number starts with this prefix, the area code is
+taken from $number and the country code is taken from the C<CountryCode>
+parameter.
+
+If $number starts with neither C<IntlPrefix> nor C<LDPrefix>, it is assumed to
+be in local format and both country and area codes are taken from the
+parameters.
+
+The default is '0' (ITU recommendation).
+
+=back
+
+=head3 for output
+
+These parameters control formatting of the output.
+Most parameters only affect output in local format.
+
+=over
+
+=item CountryCodeOut
+
+The local country code. If the number does not have the C<CountryCode> specified,
+it is returned starting with the C<IntlPrefix>.
+
+=item AreaCodeOut
+
+The local country code. If the number does not have the C<CountryCode> specified,
+it is returned starting with the C<LDPrefix>.
+
+=item C<IntlPrefixOut>
+
+The international prefix for output. If the number is not in the country
+specified by C<CountryCode>, the returned number will start with this prefix.
+
+The default is C<IntlPrefix>.
+
+You can set this parameter to '+' in order to return numbers in international
+format instead of the local format.
+
+=item C<LDPrefixOut>
+
+The long distance prefix for output. It the number is not in the area specified
+by C<AreaCode> or C<AlwaysLD> is set to true, it is returned starting with C<LDPrefixOut>.
+
+The default is LDPrefix.
+
+=item C<AlwaysLD>
+
+If set to true, the number will always be returned with an area code, even if
+it is in the country and area specified by C<CountryCode> and C<AreaCode>.
+
+=item C<VanityOK>
+
+If set to true, vanity numbers will not be converted to numeric format.
+
+=back
 
 =head1 BUGS AND LIMITATIONS
 
