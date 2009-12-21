@@ -1,12 +1,14 @@
-use 5.005;
-use ExtUtils::MakeMaker;
-# See lib/ExtUtils/MakeMaker.pm for details of how to influence
-# the contents of the Makefile that is written.
-WriteMakefile(
-    'NAME'		=> 'Number::Phone::Normalize',
-    'VERSION_FROM'	=> 'lib/Number/Phone/Normalize.pm', # finds $VERSION
-    'ABSTRACT_FROM'	=> 'lib/Number/Phone/Normalize.pm', # retrieve abstract from module
-    'PREREQ_PM'		=> { },
-    'AUTHOR'		=> 'Claus Faerber <CFAERBER@cpan.org>',
-    'LICENSE'		=> 'perl',
+#!/usr/bin/perl
+
+use Module::Build;
+
+my $b = Module::Build->new(
+	'module_name'	=> 'Number::Phone::Normalize',
+	'license'	=> 'perl',
+	
+	'sign'		=> 1,
+	'create_license' => 1,
+	'write_makefile_pl' => 'traditional',
 );
+
+$b->create_build_script;

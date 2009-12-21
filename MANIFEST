@@ -1,8 +1,10 @@
 Changes
-Makefile.PL
+Build.PL
 MANIFEST
 lib/Number/Phone/Normalize.pm
 README
+t/05pod_check.t
+t/06pod_coverage.t
 t/00base-use.t
 t/10obj__intl.t
 t/15obj__local.t
@@ -23,3 +25,4 @@ t/40vanity_cvrt.t
 t/41vanity_ok.t
 t/42vanity_ac.t
 LICENSE
+META.yml
