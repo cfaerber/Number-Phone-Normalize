@@ -8,7 +8,7 @@ use Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(phone_intl phone_local);
 
-our $VERSION = '0.20';
+our $VERSION = '0.21_20091221';
 
 sub _kill_vanity {
   my $number = shift;
@@ -64,9 +64,6 @@ sub _self {
   return $self->new(%param) if %param;
   return $self;
 }
-
-sub phone_intl { unshift @_, undef; goto &intl; }
-sub phone_local { unshift @_, undef; goto &local; }
 
 sub intl {
   my ($self,$number,%param) = @_;
@@ -224,6 +221,9 @@ sub AlwaysLD {
   return $old_value;
 }
 
+sub phone_intl { unshift @_, undef; goto &intl; }
+sub phone_local { unshift @_, undef; goto &local; }
+
 1;
 
 __END__
@@ -245,8 +245,6 @@ This module takes a phone (or E.164) number in different input formats and
 outputs it in accordance to E.123 or in local formats.
 
 =head1 Functions and Methods
-
-
 
 =head2 phone_intl( $number, %params )
 
@@ -376,13 +374,19 @@ are equivalent to the follwoing:
 =head1 BUGS AND LIMITATIONS
 
 The module does not support more complex dialling plans. It is
-mostly intended for data input/output to and from databases, not
-for actually dialling numbers.
+mostly intended for data input and output (especially to and from
+databases), but not to prepare numbers for dialling.
 
-=head1 AUTHOR/LICENSE
+=head1 AUTHOR
 
-Copyright © 2004-2008 Claus Färber <CFAERBER@cpan.org>
+Claus FE<auml>rber <CFAERBER@cpan.org>
+
+=head1 LICENSE
+
+Copyright 2004-2009 Claus FE<auml>rber.
 
 It is free software; you can redistribute it and/or modify it
 under the same terms as perl itself, either version 5.5.0 or, at
 your option, any later version.
+
+=cut
